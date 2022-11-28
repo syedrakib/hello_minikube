@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: root
+      port: { name: http }
+  rules:
+  - host: hello-minikube.me
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/foo"
+        backend:
+          service:
+            name: foo
+            port: { name: http }
+      - pathType: Prefix
+        path: "/bar"
+        backend:
+          service:
+            name: bar
+            port: { name: http }
